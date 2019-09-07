@@ -5,11 +5,21 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ASK_App.Models;
+using Microsoft.AspNetCore.Identity;
+using ASK_App.Data;
 
 namespace ASK_App.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ApplicationDbContext _context;
+
+        public HomeController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
         public IActionResult Index()
         {
             return View();

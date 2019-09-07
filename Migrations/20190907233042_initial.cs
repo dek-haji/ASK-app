@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace ASK_App.Data.Migrations
+namespace ASK_App.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -40,11 +40,27 @@ namespace ASK_App.Data.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    FirstName = table.Column<string>(nullable: false),
+                    LastName = table.Column<string>(nullable: false),
+                    IsAlumni = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "QuestionType",
+                columns: table => new
+                {
+                    QuestionTypeId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QuestionType", x => x.QuestionTypeId);
                 });
 
             migrationBuilder.CreateTable(
@@ -153,6 +169,72 @@ namespace ASK_App.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Question",
+                columns: table => new
+                {
+                    QuestionId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: false),
+                    Title = table.Column<string>(nullable: false),
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    QuestionTypeId = table.Column<int>(nullable: false),
+                    UserId = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Question", x => x.QuestionId);
+                    table.ForeignKey(
+                        name: "FK_Question_QuestionType_QuestionTypeId",
+                        column: x => x.QuestionTypeId,
+                        principalTable: "QuestionType",
+                        principalColumn: "QuestionTypeId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Question_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Answer",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    QuestionId = table.Column<int>(nullable: false),
+                    UserId = table.Column<string>(nullable: true),
+                    Answers = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Answer", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Answer_Question_QuestionId",
+                        column: x => x.QuestionId,
+                        principalTable: "Question",
+                        principalColumn: "QuestionId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Answer_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Answer_QuestionId",
+                table: "Answer",
+                column: "QuestionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Answer_UserId",
+                table: "Answer",
+                column: "UserId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -191,10 +273,23 @@ namespace ASK_App.Data.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Question_QuestionTypeId",
+                table: "Question",
+                column: "QuestionTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Question_UserId",
+                table: "Question",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Answer");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -211,7 +306,13 @@ namespace ASK_App.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Question");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "QuestionType");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
