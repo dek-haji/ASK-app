@@ -1,28 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using ASK_App.Data;
+using ASK_App.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ASK_App.Data;
 using ASK_App.Models;
 
-namespace ASK_App.Controllers
+namespace testDemo.Controllers
 {
     public class QuestionsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public QuestionsController(ApplicationDbContext context)
+        public QuestionsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Questions
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Question.Include(q => q.QuestionType).Include(q => q.User);
+            var user = await GetUserAsync();
+            // Heather updated this section below for getting current user
+            var applicationDbContext = _context.Question
+                .Where(p => p.UserId == user.Id)
+                .Include(p => p.User)
+                .Include(p => p.QuestionType);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -35,8 +47,6 @@ namespace ASK_App.Controllers
             }
 
             var question = await _context.Question
-                .Include(q => q.QuestionType)
-                .Include(q => q.User)
                 .FirstOrDefaultAsync(m => m.QuestionId == id);
             if (question == null)
             {
@@ -49,8 +59,21 @@ namespace ASK_App.Controllers
         // GET: Questions/Create
         public IActionResult Create()
         {
-            ViewData["QuestionTypeId"] = new SelectList(_context.Set<QuestionType>(), "QuestionTypeId", "QuestionTypeId");
-            ViewData["UserId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id");
+            //var productTypeList = new SelectList(_context.ProductType, "ProductTypeId", "Label");
+            var productTypeList = _context.QuestionType.ToList();
+            var questionTypeSelectList = productTypeList.Select(type => new SelectListItem
+            {
+                Text = type.Name,
+                Value = type.QuestionTypeId.ToString()
+            }).ToList();
+            questionTypeSelectList.Insert(0, new SelectListItem
+            {
+                Text = "Choose Category...",
+                Value = ""
+            });
+
+            ViewData["QuestionTypeId"] = questionTypeSelectList;
+
             return View();
         }
 
@@ -59,19 +82,37 @@ namespace ASK_App.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("QuestionId,Name,Title,DateCreated,QuestionTypeId,UserId")] Question question)
+        public async Task<IActionResult> Create([Bind("QuestionId,Title,Name,UserId,QuestionTypeId")] Question question)
         {
+
+
+
+
+            var user = await GetUserAsync();
+            ModelState.Remove("User");
+            ModelState.Remove("QuestionType");
+            ModelState.Remove("UserId");
+
             if (ModelState.IsValid)
             {
+                question.UserId = user.Id;
+
+
+
                 _context.Add(question);
+
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["QuestionTypeId"] = new SelectList(_context.Set<QuestionType>(), "QuestionTypeId", "QuestionTypeId", question.QuestionTypeId);
-            ViewData["UserId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", question.UserId);
+            var QuestionTypeList = new SelectList(_context.QuestionType, "QuestionTypeId", "Name", question.QuestionTypeId);
+
+            ViewData["QuestionTypeId"] = QuestionTypeList;
             return View(question);
         }
-
+        private Task<ApplicationUser> GetUserAsync()
+        {
+            return _userManager.GetUserAsync(HttpContext.User);
+        }
         // GET: Questions/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -85,8 +126,6 @@ namespace ASK_App.Controllers
             {
                 return NotFound();
             }
-            ViewData["QuestionTypeId"] = new SelectList(_context.Set<QuestionType>(), "QuestionTypeId", "QuestionTypeId", question.QuestionTypeId);
-            ViewData["UserId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", question.UserId);
             return View(question);
         }
 
@@ -95,7 +134,7 @@ namespace ASK_App.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("QuestionId,Name,Title,DateCreated,QuestionTypeId,UserId")] Question question)
+        public async Task<IActionResult> Edit(int id, [Bind("QuestionId,Name,Title,dateCreated,QuestionTypeId")] Question question)
         {
             if (id != question.QuestionId)
             {
@@ -122,8 +161,6 @@ namespace ASK_App.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["QuestionTypeId"] = new SelectList(_context.Set<QuestionType>(), "QuestionTypeId", "QuestionTypeId", question.QuestionTypeId);
-            ViewData["UserId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", question.UserId);
             return View(question);
         }
 
@@ -136,8 +173,6 @@ namespace ASK_App.Controllers
             }
 
             var question = await _context.Question
-                .Include(q => q.QuestionType)
-                .Include(q => q.User)
                 .FirstOrDefaultAsync(m => m.QuestionId == id);
             if (question == null)
             {
@@ -162,5 +197,6 @@ namespace ASK_App.Controllers
         {
             return _context.Question.Any(e => e.QuestionId == id);
         }
+
     }
 }

@@ -16,5 +16,6 @@ namespace ASK_App.Data
         public DbSet<ApplicationUser> ApplicationUser { get; set; }
         public DbSet<ASK_App.Models.Question> Question { get; set; }
         public DbSet<ASK_App.Models.Answer> Answer { get; set; }
+        public DbSet<ASK_App.Models.QuestionType> QuestionType { get; set; }
     }
 }
