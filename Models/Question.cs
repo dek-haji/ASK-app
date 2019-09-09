@@ -11,6 +11,7 @@ namespace ASK_App.Models
         [Key]
         public int QuestionId { get; set; }
         [Required]
+        [Display(Name = "Question")]
         public string Name { get; set; }
         [Required]
         public string Title { get; set; }
@@ -20,7 +21,7 @@ namespace ASK_App.Models
         public string UserId { get; set; }
         public ApplicationUser User { get; set; }
         [Required]
-        [Display(Name = "Product Category")]
+        [Display(Name = "Question Category")]
 
 
         public QuestionType QuestionType { get; set; }
