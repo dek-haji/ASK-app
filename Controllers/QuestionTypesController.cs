@@ -7,43 +7,25 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ASK_App.Data;
 using ASK_App.Models;
-using ASK_App.Models.QuestionAnswersViewModel;
-using Microsoft.Extensions.Configuration;
-using System.Data.SqlClient;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace ASK_App.Controllers
 {
-    public class AnswersController : Controller
+    public class QuestionTypesController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly IConfiguration _config;
 
-        public AnswersController(ApplicationDbContext context, IConfiguration config)
+        public QuestionTypesController(ApplicationDbContext context)
         {
             _context = context;
-            _config = config;
-
         }
 
-
-        public SqlConnection Connection
-        {
-            get
-            {
-                return new SqlConnection(_config.GetConnectionString("DefaultConnection"));
-            }
-        }
-
-
-
-        // GET: Answers
+        // GET: QuestionTypes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Answer.ToListAsync());
+            return View(await _context.QuestionType.ToListAsync());
         }
 
-        // GET: Answers/Details/5
+        // GET: QuestionTypes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -51,42 +33,39 @@ namespace ASK_App.Controllers
                 return NotFound();
             }
 
-            var answer = await _context.Answer
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (answer == null)
+            var questionType = await _context.QuestionType
+                .FirstOrDefaultAsync(m => m.QuestionTypeId == id);
+            if (questionType == null)
             {
                 return NotFound();
             }
 
-            return View(answer);
+            return View(questionType);
         }
 
-        // GET: Answers/Create
-        [HttpGet]
-        public IActionResult Create([FromRoute] int id)
+        // GET: QuestionTypes/Create
+        public IActionResult Create()
         {
-            var viewModel = new AnswerCreateViewModel();
-            viewModel.Question = _context.Question.Find(id);
-            return View(viewModel);
+            return View();
         }
 
-        // POST: Answers/Create
+        // POST: QuestionTypes/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Answers")] Answer answer)
+        public async Task<IActionResult> Create([Bind("QuestionTypeId,Name")] QuestionType questionType)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(answer);
+                _context.Add(questionType);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(answer);
+            return View(questionType);
         }
 
-        // GET: Answers/Edit/5
+        // GET: QuestionTypes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -94,22 +73,22 @@ namespace ASK_App.Controllers
                 return NotFound();
             }
 
-            var answer = await _context.Answer.FindAsync(id);
-            if (answer == null)
+            var questionType = await _context.QuestionType.FindAsync(id);
+            if (questionType == null)
             {
                 return NotFound();
             }
-            return View(answer);
+            return View(questionType);
         }
 
-        // POST: Answers/Edit/5
+        // POST: QuestionTypes/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Answers")] Answer answer)
+        public async Task<IActionResult> Edit(int id, [Bind("QuestionTypeId,Name")] QuestionType questionType)
         {
-            if (id != answer.Id)
+            if (id != questionType.QuestionTypeId)
             {
                 return NotFound();
             }
@@ -118,12 +97,12 @@ namespace ASK_App.Controllers
             {
                 try
                 {
-                    _context.Update(answer);
+                    _context.Update(questionType);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AnswerExists(answer.Id))
+                    if (!QuestionTypeExists(questionType.QuestionTypeId))
                     {
                         return NotFound();
                     }
@@ -134,10 +113,10 @@ namespace ASK_App.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(answer);
+            return View(questionType);
         }
 
-        // GET: Answers/Delete/5
+        // GET: QuestionTypes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -145,31 +124,30 @@ namespace ASK_App.Controllers
                 return NotFound();
             }
 
-            var answer = await _context.Answer
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (answer == null)
+            var questionType = await _context.QuestionType
+                .FirstOrDefaultAsync(m => m.QuestionTypeId == id);
+            if (questionType == null)
             {
                 return NotFound();
             }
 
-            return View(answer);
+            return View(questionType);
         }
 
-        // POST: Answers/Delete/5
+        // POST: QuestionTypes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var answer = await _context.Answer.FindAsync(id);
-            _context.Answer.Remove(answer);
+            var questionType = await _context.QuestionType.FindAsync(id);
+            _context.QuestionType.Remove(questionType);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AnswerExists(int id)
+        private bool QuestionTypeExists(int id)
         {
-            return _context.Answer.Any(e => e.Id == id);
+            return _context.QuestionType.Any(e => e.QuestionTypeId == id);
         }
     }
-   
 }

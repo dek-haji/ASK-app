@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ASK_App.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190907233042_initial")]
+    [Migration("20190909160416_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -29,15 +29,15 @@ namespace ASK_App.Migrations
 
                     b.Property<string>("Answers");
 
-                    b.Property<int>("QuestionId");
+                    b.Property<string>("ApplicationUserId");
 
-                    b.Property<string>("UserId");
+                    b.Property<int?>("QuestionId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("QuestionId");
+                    b.HasIndex("ApplicationUserId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("QuestionId");
 
                     b.ToTable("Answer");
                 });
@@ -258,14 +258,13 @@ namespace ASK_App.Migrations
 
             modelBuilder.Entity("ASK_App.Models.Answer", b =>
                 {
-                    b.HasOne("ASK_App.Models.Question")
+                    b.HasOne("ASK_App.Models.ApplicationUser")
                         .WithMany("Answers")
-                        .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ApplicationUserId");
 
-                    b.HasOne("ASK_App.Models.ApplicationUser", "User")
+                    b.HasOne("ASK_App.Models.Question", "Question")
                         .WithMany("Answers")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("QuestionId");
                 });
 
             modelBuilder.Entity("ASK_App.Models.Question", b =>
