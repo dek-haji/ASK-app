@@ -10,6 +10,7 @@ using ASK_App.Models;
 using ASK_App.Models.QuestionAnswersViewModel;
 using Microsoft.Extensions.Configuration;
 using System.Data.SqlClient;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace ASK_App.Controllers
 {
@@ -62,9 +63,10 @@ namespace ASK_App.Controllers
 
         // GET: Answers/Create
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult Create([FromRoute] int id)
         {
-            var viewModel = new AnswerCreateViewModel(_config.GetConnectionString("DefaultConnection"));
+            var viewModel = new AnswerCreateViewModel();
+            viewModel.Question = _context.Question.Find(id);
             return View(viewModel);
         }
 
@@ -169,4 +171,5 @@ namespace ASK_App.Controllers
             return _context.Answer.Any(e => e.Id == id);
         }
     }
+   
 }
