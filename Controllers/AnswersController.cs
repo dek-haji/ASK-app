@@ -7,23 +7,39 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ASK_App.Data;
 using ASK_App.Models;
+using ASK_App.Models.QuestionAnswersViewModel;
+using Microsoft.Extensions.Configuration;
+using System.Data.SqlClient;
 
 namespace ASK_App.Controllers
 {
     public class AnswersController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IConfiguration _config;
 
-        public AnswersController(ApplicationDbContext context)
+        public AnswersController(ApplicationDbContext context, IConfiguration config)
         {
             _context = context;
+            _config = config;
+
         }
+
+
+        public SqlConnection Connection
+        {
+            get
+            {
+                return new SqlConnection(_config.GetConnectionString("DefaultConnection"));
+            }
+        }
+
+
 
         // GET: Answers
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Answer.Include(a => a.User);
-            return View(await applicationDbContext.ToListAsync());
+            return View(await _context.Answer.ToListAsync());
         }
 
         // GET: Answers/Details/5
@@ -35,7 +51,6 @@ namespace ASK_App.Controllers
             }
 
             var answer = await _context.Answer
-                .Include(a => a.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (answer == null)
             {
@@ -46,10 +61,11 @@ namespace ASK_App.Controllers
         }
 
         // GET: Answers/Create
+        [HttpGet]
         public IActionResult Create()
         {
-            ViewData["UserId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id");
-            return View();
+            var viewModel = new AnswerCreateViewModel(_config.GetConnectionString("DefaultConnection"));
+            return View(viewModel);
         }
 
         // POST: Answers/Create
@@ -57,7 +73,7 @@ namespace ASK_App.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,QuestionId,UserId,Answers")] Answer answer)
+        public async Task<IActionResult> Create([Bind("Id,Answers")] Answer answer)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +81,6 @@ namespace ASK_App.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", answer.UserId);
             return View(answer);
         }
 
@@ -82,7 +97,6 @@ namespace ASK_App.Controllers
             {
                 return NotFound();
             }
-            ViewData["UserId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", answer.UserId);
             return View(answer);
         }
 
@@ -91,7 +105,7 @@ namespace ASK_App.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,QuestionId,UserId,Answers")] Answer answer)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Answers")] Answer answer)
         {
             if (id != answer.Id)
             {
@@ -118,7 +132,6 @@ namespace ASK_App.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", answer.UserId);
             return View(answer);
         }
 
@@ -131,7 +144,6 @@ namespace ASK_App.Controllers
             }
 
             var answer = await _context.Answer
-                .Include(a => a.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (answer == null)
             {

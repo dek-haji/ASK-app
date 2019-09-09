@@ -10,8 +10,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using ASK_App.Data;
-using ASK_App.Models;
 
 namespace testDemo.Controllers
 {
@@ -30,7 +28,7 @@ namespace testDemo.Controllers
         public async Task<IActionResult> Index()
         {
             var user = await GetUserAsync();
-            // Heather updated this section below for getting current user
+           
             var applicationDbContext = _context.Question
                 .Where(p => p.UserId == user.Id)
                 .Include(p => p.User)

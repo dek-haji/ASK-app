@@ -27,15 +27,15 @@ namespace ASK_App.Migrations
 
                     b.Property<string>("Answers");
 
-                    b.Property<int>("QuestionId");
+                    b.Property<string>("ApplicationUserId");
 
-                    b.Property<string>("UserId");
+                    b.Property<int?>("QuestionId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("QuestionId");
+                    b.HasIndex("ApplicationUserId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("QuestionId");
 
                     b.ToTable("Answer");
                 });
@@ -256,14 +256,13 @@ namespace ASK_App.Migrations
 
             modelBuilder.Entity("ASK_App.Models.Answer", b =>
                 {
+                    b.HasOne("ASK_App.Models.ApplicationUser")
+                        .WithMany("Answers")
+                        .HasForeignKey("ApplicationUserId");
+
                     b.HasOne("ASK_App.Models.Question", "Question")
                         .WithMany("Answers")
-                        .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("ASK_App.Models.ApplicationUser", "User")
-                        .WithMany("Answers")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("QuestionId");
                 });
 
             modelBuilder.Entity("ASK_App.Models.Question", b =>
