@@ -44,7 +44,7 @@ namespace testDemo.Controllers
                 return NotFound();
             }
 
-            var question = await _context.Question
+            var question = await _context.Question.Include(q => q.Answers)    
                 .FirstOrDefaultAsync(m => m.QuestionId == id);
             if (question == null)
             {

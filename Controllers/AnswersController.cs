@@ -110,6 +110,7 @@ namespace ASK_App.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Answers")] Answer answer)
         {
+            
             if (id != answer.Id)
             {
                 return NotFound();
