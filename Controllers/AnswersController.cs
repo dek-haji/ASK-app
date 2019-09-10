@@ -75,10 +75,11 @@ namespace ASK_App.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Answers")] Answer answer)
+        public async Task<IActionResult> Create(int id,  [Bind("Id,Answers")] Answer answer)
         {
             if (ModelState.IsValid)
             {
+                answer.QuestionId = id;
                 _context.Add(answer);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
