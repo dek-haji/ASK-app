@@ -8,7 +8,7 @@ namespace ASK_App.Models
 {
     public class Question
     {
-        [Key]
+        
         public int QuestionId { get; set; }
         [Required]
         [Display(Name = "Question")]
