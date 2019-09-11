@@ -11,16 +11,17 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Title)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
         </dd>
 
 
@@ -36,10 +37,13 @@
     </div>
 
     <a asp-action="Edit" asp-route-id="@Model.QuestionId">Edit</a> |
-    <a href="@Url.Action("Create", "Answers")">
-       
-            <p class="category-title">Technology</p>
-       
-    </a>|
+
+    @Html.ActionLink(
+  "Answer here",
+  "Create",                         // controller action
+  "Answers",        // controller
+  new { Model.QuestionId },         // action parameters aka route values
+  new { @class = "btn btn-info" }) 
+   
     <a asp-action="Index">Back to List</a>
 </div>

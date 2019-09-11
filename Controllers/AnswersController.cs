@@ -63,10 +63,10 @@ namespace ASK_App.Controllers
 
         // GET: Answers/Create
         [HttpGet]
-        public IActionResult Create([FromRoute] int id)
+        public IActionResult Create(int? QuestionId)
         {
             var viewModel = new AnswerCreateViewModel();
-            viewModel.Question = _context.Question.Find(id);
+            viewModel.Question = _context.Question.Find(QuestionId);
             return View(viewModel);
         }
 

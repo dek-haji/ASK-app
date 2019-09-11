@@ -34,6 +34,7 @@ namespace testDemo.Controllers
                 .Include(p => p.User)
                 .Include(p => p.QuestionType);
             return View(await applicationDbContext.ToListAsync());
+          
         }
 
         // GET: Questions/Details/5
