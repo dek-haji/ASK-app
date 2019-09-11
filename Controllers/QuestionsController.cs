@@ -25,17 +25,36 @@ namespace testDemo.Controllers
         }
 
         // GET: Questions
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string questionType)
         {
-            var user = await GetUserAsync();
+            var questions = _context.Question.Include(q => q.QuestionType).AsQueryable();
+                                        
            
-            var applicationDbContext = _context.Question
-                .Where(p => p.UserId == user.Id)
-                .Include(p => p.User)
-                .Include(p => p.QuestionType);
-            return View(await applicationDbContext.ToListAsync());
-          
+            if (!String.IsNullOrEmpty(questionType))
+            {
+                questions = questions.Where(x => x.QuestionType.Name == questionType);
+            }
+
+            var questionTypes = _context.QuestionType;
+
+            var QuestionTypeMV = new QuestionTypeViewModel
+            {
+                QuestionTypes = new SelectList(await questionTypes.ToListAsync()),
+                Questions = await questions.ToListAsync()
+            };
+
+            return View(QuestionTypeMV);
         }
+
+        //var user = await GetUserAsync();
+           
+        //    var applicationDbContext = _context.Question
+        //        .Where(p => p.UserId == user.Id)
+        //        .Include(p => p.User)
+        //        .Include(p => p.QuestionType);
+        //    return View(await applicationDbContext.ToListAsync());
+          
+        //}
 
         // GET: Questions/Details/5
         public async Task<IActionResult> Details(int? id)
