@@ -63,10 +63,14 @@ namespace ASK_App.Controllers
 
         // GET: Answers/Create
         [HttpGet]
-        public IActionResult Create(int? QuestionId)
+        public IActionResult Create(int QuestionId)
         {
             var viewModel = new AnswerCreateViewModel();
             viewModel.Question = _context.Question.Find(QuestionId);
+            viewModel.Answer = new Answer()
+            {
+                QuestionId = QuestionId
+            };
             return View(viewModel);
         }
 
@@ -75,11 +79,11 @@ namespace ASK_App.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(int id,  [Bind("Id,Answers")] Answer answer)
+        public async Task<IActionResult> Create(int Id,  [Bind("Id,Answers,QuestionId")] Answer answer)
         {
             if (ModelState.IsValid)
             {
-                answer.QuestionId = id;
+                //answer.QuestionId = Id;
                 _context.Add(answer);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

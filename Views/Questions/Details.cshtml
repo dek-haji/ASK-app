@@ -35,15 +35,12 @@
     }
     <div>
     </div>
-
-    <a asp-action="Edit" asp-route-id="@Model.QuestionId">Edit</a> |
-
     @Html.ActionLink(
-  "Answer here",
-  "Create",                         // controller action
-  "Answers",        // controller
-  new { Model.QuestionId },         // action parameters aka route values
-  new { @class = "btn btn-info" }) 
-   
+ "Answer here",
+ "Create",                         // controller action
+ "Answers",        // controller
+ new { Model.QuestionId },         // action parameters aka route values
+ new { @class = "btn btn-info" })
+    <a asp-action="Edit" asp-route-id="@Model.QuestionId">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
