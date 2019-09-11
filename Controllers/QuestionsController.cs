@@ -25,14 +25,14 @@ namespace testDemo.Controllers
         }
 
         // GET: Questions
-        public async Task<IActionResult> Index(string questionType)
+        public async Task<IActionResult> Index(int? questionTypeId)
         {
             var questions = _context.Question.Include(q => q.QuestionType).AsQueryable();
                                         
            
-            if (!String.IsNullOrEmpty(questionType))
+            if (questionTypeId != null)
             {
-                questions = questions.Where(x => x.QuestionType.Name == questionType);
+                questions = questions.Where(x => x.QuestionType.QuestionTypeId == questionTypeId);
             }
 
             var questionTypes = _context.QuestionType;
