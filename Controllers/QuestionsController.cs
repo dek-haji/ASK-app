@@ -28,8 +28,14 @@ namespace testDemo.Controllers
         public async Task<IActionResult> Index(int? questionTypeId)
         {
             var questions = _context.Question.Include(q => q.QuestionType).AsQueryable();
-                                        
-           
+            var user = await GetUserAsync();
+
+            //var applicationDbContext = _context.Question
+            //    .Where(p => p.UserId == user.Id)
+            //    .Include(p => p.User)
+            //    .Include(p => p.QuestionType);
+
+
             if (questionTypeId != null)
             {
                 questions = questions.Where(x => x.QuestionType.QuestionTypeId == questionTypeId);
@@ -41,6 +47,7 @@ namespace testDemo.Controllers
             {
                 QuestionTypes = new SelectList(await questionTypes.ToListAsync(), "QuestionTypeId", "Name"),
                 Questions = await questions.ToListAsync(),
+                
                 
             };
 
