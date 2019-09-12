@@ -101,7 +101,7 @@ namespace testDemo.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("QuestionId,Title,Name,UserId,QuestionTypeId")] Question question)
+        public async Task<IActionResult> Create([Bind("Title,Name,UserId,QuestionTypeId")] Question question)
         {
 
 
