@@ -139,8 +139,8 @@ namespace testDemo.Controllers
             {
                 return NotFound();
             }
-
-            var question = await _context.Question.FindAsync(id);
+            var question = await _context.Question.Include(q => q.User).Include(q => q.QuestionType).FirstOrDefaultAsync();
+            //var question = await _context.Question.FindAsync(id);
             if (question == null)
             {
                 return NotFound();
@@ -153,7 +153,7 @@ namespace testDemo.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("QuestionId,Name,Title,dateCreated,QuestionTypeId")] Question question)
+        public async Task<IActionResult> Edit(int id, [Bind("QuestionId,Name,Title,dateCreated,QuestionTypeId, UserId")] Question question)
         {
             if (id != question.QuestionId)
             {

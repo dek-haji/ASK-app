@@ -16,14 +16,12 @@ namespace ASK_App.Models
         [Required]
         public string Title { get; set; }
         public DateTime DateCreated { get; set; }
+        [Required]
         public int QuestionTypeId { get; set; }
         [Required]
         public string UserId { get; set; }
         public ApplicationUser User { get; set; }
-        [Required]
         [Display(Name = "Question Category")]
-
-
         public QuestionType QuestionType { get; set; }
         public virtual ICollection<Answer> Answers { get; set; }
     }
