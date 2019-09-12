@@ -63,6 +63,8 @@ namespace ASK_App.Areas.Identity.Pages.Account
             [Required]
             [Display(Name = "Last Name")]
             public string LastName { get; set; }
+            [Display(Name = "Alumni")]
+            public bool IsAlumni { get; set; }
         }
 
         public void OnGet(string returnUrl = null)
