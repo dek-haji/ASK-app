@@ -9,10 +9,11 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<form asp-controller="QuestionTypeViewModel" asp-action="Index" method="get">
+<form asp-controller="Questions" asp-action="Index" method="get">
     <p>
 
-        <select asp-for="questionType" asp-items="@Model.QuestionTypes"  onchange = "this.form.submit();">
+        <select asp-for="QuestionType" asp-items="@Model.QuestionTypes"  onchange = "redirect(this.value);">
+            
             <option value="">All</option>
         </select>
         </p>
@@ -69,3 +70,11 @@
         </table>
 
     </form>
+
+<script>
+    function redirect(DropDownValue) {
+        window.location.href = '/Questions/Index?questionTypeId=' + DropDownValue;
+    }
+
+
+</script>

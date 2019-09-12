@@ -36,11 +36,12 @@ namespace testDemo.Controllers
             }
 
             var questionTypes = _context.QuestionType;
-
+            
             var QuestionTypeMV = new QuestionTypeViewModel
             {
-                QuestionTypes = new SelectList(await questionTypes.ToListAsync()),
-                Questions = await questions.ToListAsync()
+                QuestionTypes = new SelectList(await questionTypes.ToListAsync(), "QuestionTypeId", "Name"),
+                Questions = await questions.ToListAsync(),
+                
             };
 
             return View(QuestionTypeMV);
@@ -77,7 +78,7 @@ namespace testDemo.Controllers
         // GET: Questions/Create
         public IActionResult Create()
         {
-            //var productTypeList = new SelectList(_context.ProductType, "ProductTypeId", "Label");
+           // var productTypeList = new SelectList(_context.QuestionType, "QuestionTypeId", "Name");
             var productTypeList = _context.QuestionType.ToList();
             var questionTypeSelectList = productTypeList.Select(type => new SelectListItem
             {
