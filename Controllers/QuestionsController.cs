@@ -25,17 +25,37 @@ namespace testDemo.Controllers
         }
 
         // GET: Questions
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? questionTypeId)
         {
-            var user = await GetUserAsync();
+            var questions = _context.Question.Include(q => q.QuestionType).AsQueryable();
+                                        
            
-            var applicationDbContext = _context.Question
-                .Where(p => p.UserId == user.Id)
-                .Include(p => p.User)
-                .Include(p => p.QuestionType);
-            return View(await applicationDbContext.ToListAsync());
-          
+            if (questionTypeId != null)
+            {
+                questions = questions.Where(x => x.QuestionType.QuestionTypeId == questionTypeId);
+            }
+
+            var questionTypes = _context.QuestionType;
+            
+            var QuestionTypeMV = new QuestionTypeViewModel
+            {
+                QuestionTypes = new SelectList(await questionTypes.ToListAsync(), "QuestionTypeId", "Name"),
+                Questions = await questions.ToListAsync(),
+                
+            };
+
+            return View(QuestionTypeMV);
         }
+
+        //var user = await GetUserAsync();
+           
+        //    var applicationDbContext = _context.Question
+        //        .Where(p => p.UserId == user.Id)
+        //        .Include(p => p.User)
+        //        .Include(p => p.QuestionType);
+        //    return View(await applicationDbContext.ToListAsync());
+          
+        //}
 
         // GET: Questions/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -58,7 +78,7 @@ namespace testDemo.Controllers
         // GET: Questions/Create
         public IActionResult Create()
         {
-            //var productTypeList = new SelectList(_context.ProductType, "ProductTypeId", "Label");
+           // var productTypeList = new SelectList(_context.QuestionType, "QuestionTypeId", "Name");
             var productTypeList = _context.QuestionType.ToList();
             var questionTypeSelectList = productTypeList.Select(type => new SelectListItem
             {
