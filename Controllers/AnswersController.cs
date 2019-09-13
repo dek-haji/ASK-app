@@ -84,19 +84,24 @@ namespace ASK_App.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(int Id,  [Bind("Id,Answers,QuestionId,UserId")] Answer answer)
+        public async Task<IActionResult> Create( [Bind("Id,Answers,QuestionId,UserId")] Answer answer)
         {
-            var user = await GetUserAsync();
-            ModelState.Remove("User");
+            ApplicationUser User = await GetCurrentUserAsync();
+            answer.UserId = User.Id;
+            ModelState.Remove("UserId");
             if (ModelState.IsValid)
             {
-                //answer.QuestionId = Id;
+                //????
+             
+              
                 _context.Add(answer);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(answer);
         }
+
+        private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
         // GET: Answers/Edit/5
         public async Task<IActionResult> Edit(int? id)

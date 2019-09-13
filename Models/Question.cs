@@ -16,7 +16,9 @@ namespace ASK_App.Models
         public string Name { get; set; }
         [Required]
         public string Title { get; set; }
-      
+        [Required]
+        [DataType(DataType.Date)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime DateCreated { get; set; }
         [Required]
         public int QuestionTypeId { get; set; }
