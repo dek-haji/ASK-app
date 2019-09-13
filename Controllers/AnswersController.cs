@@ -121,7 +121,7 @@ namespace ASK_App.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Answers")] Answer answer)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Answers,QuestionId")] Answer answer)
         {
             
             if (id != answer.Id)
