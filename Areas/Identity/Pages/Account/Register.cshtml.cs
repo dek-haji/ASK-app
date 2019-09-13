@@ -82,7 +82,8 @@ namespace ASK_App.Areas.Identity.Pages.Account
                     UserName = Input.Email,
                     FirstName = Input.FirstName,
                     LastName = Input.LastName,
-                    Email = Input.Email
+                    Email = Input.Email,
+                    IsAlumni = Input.IsAlumni
                 };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)

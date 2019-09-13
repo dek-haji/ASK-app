@@ -7,12 +7,13 @@ using Microsoft.AspNetCore.Mvc;
 using ASK_App.Models;
 using Microsoft.AspNetCore.Identity;
 using ASK_App.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace ASK_App.Controllers
 {
+
     public class HomeController : Controller
     {
-        private readonly UserManager<ApplicationUser> _userManager;
         private readonly ApplicationDbContext _context;
 
         public HomeController(ApplicationDbContext context)
@@ -20,9 +21,11 @@ namespace ASK_App.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        // GET: Questions
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var applicationDbContext = _context.Question.Include(p => p.QuestionType).OrderByDescending(p => p.DateCreated).Include(p => p.User).Take(20);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         public IActionResult Privacy()

@@ -216,6 +216,10 @@ namespace testDemo.Controllers
         {
             return _context.Question.Any(e => e.QuestionId == id);
         }
+        //private Task<ApplicationUser> GetUserAsync()
+        //{
+        //    return _userManager.GetUserAsync(HttpContext.User);
+        //}
 
     }
 }

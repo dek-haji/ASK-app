@@ -11,6 +11,7 @@ using ASK_App.Models.QuestionAnswersViewModel;
 using Microsoft.Extensions.Configuration;
 using System.Data.SqlClient;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using Microsoft.AspNetCore.Identity;
 
 namespace ASK_App.Controllers
 {
@@ -18,29 +19,33 @@ namespace ASK_App.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IConfiguration _config;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public AnswersController(ApplicationDbContext context, IConfiguration config)
+        public AnswersController(ApplicationDbContext context, IConfiguration config, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
             _config = config;
 
         }
 
 
-        public SqlConnection Connection
-        {
-            get
-            {
-                return new SqlConnection(_config.GetConnectionString("DefaultConnection"));
-            }
-        }
-
-
-
         // GET: Answers
         public async Task<IActionResult> Index()
         {
+            var user = await GetUserAsync();
+
+            var applicationDbContext = _context.Answer
+                .Where(a => a.UserId == user.Id);
+               
+                
+           // return View(await applicationDbContext.ToListAsync());
             return View(await _context.Answer.ToListAsync());
+        }
+
+        private Task<ApplicationUser> GetUserAsync()
+        {
+            return _userManager.GetUserAsync(HttpContext.User);
         }
 
         // GET: Answers/Details/5
@@ -79,8 +84,10 @@ namespace ASK_App.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(int Id,  [Bind("Id,Answers,QuestionId")] Answer answer)
+        public async Task<IActionResult> Create(int Id,  [Bind("Id,Answers,QuestionId,UserId")] Answer answer)
         {
+            var user = await GetUserAsync();
+            ModelState.Remove("User");
             if (ModelState.IsValid)
             {
                 //answer.QuestionId = Id;
