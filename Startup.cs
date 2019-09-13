@@ -71,7 +71,7 @@ namespace ASK_App
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Questions}/{action=Create}/{id?}");
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

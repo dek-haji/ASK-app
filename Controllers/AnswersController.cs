@@ -93,7 +93,7 @@ namespace ASK_App.Controllers
             { 
                 _context.Add(answer);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Questions", new { id = answer.QuestionId });
             }
             return View(answer);
         }
