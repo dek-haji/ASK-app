@@ -19,6 +19,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Answers)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User.FullName)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -29,21 +32,24 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Answers)
             </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.FullName)
+            </td>
             @{ if (UserManager.GetUserAsync(User).Result.Id == item.UserId)
                 {
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.Id">Details</a>
-                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                        </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
                 }
                 else
                 {
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a>
                     </td>
-                    }
                 }
+            }
         </tr>
 }
     </tbody>

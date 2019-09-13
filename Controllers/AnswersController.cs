@@ -86,6 +86,7 @@ namespace ASK_App.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create( [Bind("Id,Answers,QuestionId,UserId")] Answer answer)
         {
+            //get the current user Id and assign it to the answer.
             ApplicationUser User = await GetCurrentUserAsync();
             answer.UserId = User.Id;
             ModelState.Remove("UserId");
@@ -93,7 +94,7 @@ namespace ASK_App.Controllers
             { 
                 _context.Add(answer);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Questions", new { id = answer.QuestionId });
             }
             return View(answer);
         }

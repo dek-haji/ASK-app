@@ -29,18 +29,21 @@
     <h2>Answers</h2>
     @foreach (var item in Model.Answers)
     {
+    <dt class="col-sm-10">
+    @Html.DisplayFor(modelItem => item.User.FullName)
+    </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(modelItem => item.Answers)
         </dd>
     }
     <div>
     </div>
-    @Html.ActionLink(
- "Answer here",
- "Create",                         // controller action
- "Answers",        // controller
- new { Model.QuestionId },         // action parameters aka route values
- new { @class = "btn btn-info" })
+                @Html.ActionLink(
+             "Answer here",
+             "Create",  // controller action
+             "Answers",        // controller
+             new { Model.QuestionId },         // action parameters aka route values
+             new { @class = "btn btn-info" })
     <br />
     @*<a asp-action="Edit" asp-route-id="@Model.QuestionId">Edit</a> |*@
     <a asp-action="Index">Back to List</a>
