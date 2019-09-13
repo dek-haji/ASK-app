@@ -47,15 +47,7 @@ namespace testDemo.Controllers
             return View(QuestionTypeMV);
         }
 
-        //var user = await GetUserAsync();
-           
-        //    var applicationDbContext = _context.Question
-        //        .Where(p => p.UserId == user.Id)
-        //        .Include(p => p.User)
-        //        .Include(p => p.QuestionType);
-        //    return View(await applicationDbContext.ToListAsync());
-          
-        //}
+      
 
         // GET: Questions/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -65,7 +57,7 @@ namespace testDemo.Controllers
                 return NotFound();
             }
 
-            var question = await _context.Question.Include(q => q.Answers)    
+            var question = await _context.Question.Include(q => q.Answers).ThenInclude(a => a.User)
                 .FirstOrDefaultAsync(m => m.QuestionId == id);
             if (question == null)
             {
