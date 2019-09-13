@@ -90,10 +90,7 @@ namespace ASK_App.Controllers
             answer.UserId = User.Id;
             ModelState.Remove("UserId");
             if (ModelState.IsValid)
-            {
-                //????
-             
-              
+            { 
                 _context.Add(answer);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

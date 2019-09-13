@@ -17,5 +17,16 @@ namespace ASK_App.Data
         public DbSet<ASK_App.Models.Question> Question { get; set; }
         public DbSet<ASK_App.Models.Answer> Answer { get; set; }
         public DbSet<ASK_App.Models.QuestionType> QuestionType { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            // Customize the ASP.NET Identity model and override the defaults if needed.
+            // For example, you can rename the ASP.NET Identity table names and more.
+            // Add your customizations after calling base.OnModelCreating(builder);
+            modelBuilder.Entity<Question>()
+                .Property(b => b.DateCreated)
+                .HasDefaultValueSql("GETDATE()");
+        }
     }
 }
