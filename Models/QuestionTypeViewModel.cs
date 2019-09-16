@@ -14,32 +14,5 @@ namespace ASK_App.Models
         public Question question { get; set; }
 
         public QuestionType QuestionType { get; set; }
-       
-        //public List<QuestionType> AvailableQuestion { get; set; }
-
-
-
-
-
-
-
-        // NOTE: Here we use an expression bodied, read-only property
-        //       AND the ?. operator
-        //       ...good times....
-        //public List<SelectListItem> AvailableOption
-        //{
-        //    get
-        //    {
-        //        if (AvailableQuestion == null)
-        //        {
-        //            return null;
-        //        }
-
-        //        var apt = AvailableQuestion?.Select(d => new SelectListItem(d.Name, d.QuestionTypeId.ToString())).ToList();
-        //        apt.Insert(0, new SelectListItem("Select Question", "Add Question"));
-
-        //        return apt;
-        //    }
-        //}
     }
 }
