@@ -85,8 +85,14 @@
 </form>
 
 <script>
+    
     function redirect(DropDownValue) {
-        window.location.href = '/Questions/Index?questionTypeId=' + DropDownValue;
+     
+        if (DropDownValue) {
+            window.location.href = '/Questions/Index?questionTypeId=' + DropDownValue;
+        } else {
+            window.location.href = '/Questions/Index'
+        }
     }
 
 
