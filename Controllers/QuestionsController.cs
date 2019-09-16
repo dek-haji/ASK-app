@@ -39,7 +39,7 @@ namespace testDemo.Controllers
             
             var QuestionTypeMV = new QuestionTypeViewModel
             {
-                QuestionTypes = new SelectList(await questionTypes.ToListAsync(), "QuestionTypeId", "Name"),
+                QuestionTypes = new SelectList(await questionTypes.ToListAsync(), "QuestionTypeId", "Name", questionTypeId),
                 Questions = await questions.ToListAsync(),
                 
             };
