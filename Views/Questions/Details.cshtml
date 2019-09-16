@@ -1,5 +1,8 @@
 ﻿@model ASK_App.Models.Question
+@using Microsoft.AspNetCore.Identity
 
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 @{
     ViewData["Title"] = "Details";
 }
@@ -28,23 +31,30 @@
     </dl>
     <h2>Answers</h2>
     @foreach (var item in Model.Answers)
-    {
-    <dt class="col-sm-10">
-    @Html.DisplayFor(modelItem => item.User.FullName)
-    </dt>
+{
+        <dt class="col-sm-10">
+            @Html.DisplayFor(modelItem => item.User.FullName)
+        </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(modelItem => item.Answers)
         </dd>
+}
+    
+      
+            @{ if (UserManager.GetUserAsync(User).Result.IsAlumni == true)
+    {
+                    @Html.ActionLink(
+                               "Answer here",
+                               "Create",  // controller action
+                               "Answers",        // controller
+                               new { Model.QuestionId },         // action parameters aka route values
+                               new { @class = "btn btn-info" })
+                    <br />
+                    @*<a asp-action="Edit" asp-route-id="@Model.QuestionId">Edit</a> |*@
+                    <a asp-action="Index">Back to List</a>
     }
-    <div>
-    </div>
-                @Html.ActionLink(
-             "Answer here",
-             "Create",  // controller action
-             "Answers",        // controller
-             new { Model.QuestionId },         // action parameters aka route values
-             new { @class = "btn btn-info" })
-    <br />
-    @*<a asp-action="Edit" asp-route-id="@Model.QuestionId">Edit</a> |*@
-    <a asp-action="Index">Back to List</a>
-</div>
+    else
+    {
+                    <a asp-action="Index">Back to List</a>
+        }
+    }
