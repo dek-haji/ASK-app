@@ -33,7 +33,7 @@
                     @Html.DisplayNameFor(model => model.question.DateCreated)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.question.User.FirstName)
+                    @Html.DisplayNameFor(model => model.question.User)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.question.QuestionType)
@@ -55,7 +55,7 @@
                     @Html.DisplayFor(modelItem => item.DateCreated)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.User.FirstName)
+                    @Html.DisplayFor(modelItem => item.User.FullName)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.QuestionType.Name)
