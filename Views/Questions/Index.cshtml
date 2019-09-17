@@ -15,7 +15,7 @@
 <form asp-controller="Questions" asp-action="Index" method="get">
     <p>
 
-        <select asp-for="QuestionType" asp-items="@Model.QuestionTypes" onchange="redirect(this.value);">
+        <select asp-for="QuestionType" asp-items="@Model.QuestionTypes" onchange="redirect(this.value)">
 
             <option value="">All</option>
         </select>
@@ -57,29 +57,30 @@
                     @Html.DisplayFor(modelItem => item.QuestionType.Name)
 
                 </td>
+
                 @{ if (@item.Answers.Count() > 0)
-                    {
+                {
                         <td>
                             <a asp-action="Edit" asp-route-id="@item.QuestionId">Edit</a> |
                             <a asp-action="Details" asp-route-id="@item.QuestionId">Details</a> |
 
                         </td>
-                    }
-                    else if (UserManager.GetUserAsync(User).Result.Id == item.UserId && @item.Answers.Count() == 0)
-                    {
+                }
+                else if (UserManager.GetUserAsync(User).Result.Id == item.UserId && @item.Answers.Count() == 0)
+                {
                         <td>
                             <a asp-action="Edit" asp-route-id="@item.QuestionId">Edit</a> |
                             <a asp-action="Details" asp-route-id="@item.QuestionId">Details</a> |
                             <a asp-action="Delete" asp-route-id="@item.QuestionId">Delete</a>
 
                         </td>
-                    }
-                    else
-                    {
+                }
+                else
+                {
                         <td>
                         <a asp-action="Details" asp-route-id="@item.QuestionId">Details</a>
                             </td>
-                        }
+                }
 
 
                 }
@@ -87,19 +88,19 @@
                 }
         </tbody>
     </table>
-
+    
 </form>
 
 <script>
-    
+
     function redirect(DropDownValue) {
-     
+
         if (DropDownValue) {
             window.location.href = '/Questions/Index?questionTypeId=' + DropDownValue;
         } else {
             window.location.href = '/Questions/Index'
         }
-    
 
 
+    }
 </script>
