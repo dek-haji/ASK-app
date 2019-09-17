@@ -23,9 +23,7 @@
     <table class="table">
         <thead>
             <tr>
-                @*<th>
-                    @Html.DisplayNameFor(model => model.question.Name)
-                </th>*@
+               
                 <th>
                     @Html.DisplayNameFor(model => model.question.Title)
                 </th>
@@ -45,9 +43,7 @@
             @foreach (var item in Model.Questions)
             {
             <tr>
-                @*<td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>*@
+
                 <td>
                     @Html.DisplayFor(modelItem => item.Title)
                 </td>
@@ -61,29 +57,34 @@
                     @Html.DisplayFor(modelItem => item.QuestionType.Name)
 
                 </td>
-                @{ if (UserManager.GetUserAsync(User).Result.Id == item.UserId && @item.Answers.Count() > 0)
+                @{ if (@item.Answers.Count() > 0)
                     {
                         <td>
                             <a asp-action="Edit" asp-route-id="@item.QuestionId">Edit</a> |
                             <a asp-action="Details" asp-route-id="@item.QuestionId">Details</a> |
-                           
+
                         </td>
                     }
                     else if (UserManager.GetUserAsync(User).Result.Id == item.UserId && @item.Answers.Count() == 0)
                     {
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.QuestionId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.QuestionId">Details</a> |
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.QuestionId">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.QuestionId">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.QuestionId">Delete</a>
 
-                <a asp-action="Delete" asp-route-id="@item.QuestionId">Delete</a>
-
-            </td>
-                            }
-                           
+                        </td>
                     }
+                    else
+                    {
+                        <td>
+                        <a asp-action="Details" asp-route-id="@item.QuestionId">Details</a>
+                            </td>
+                        }
+
+
                 }
             </tr>
-            }
+                }
         </tbody>
     </table>
 
@@ -98,7 +99,7 @@
         } else {
             window.location.href = '/Questions/Index'
         }
-    }
+    
 
 
 </script>
