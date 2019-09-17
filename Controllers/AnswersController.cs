@@ -108,8 +108,8 @@ namespace ASK_App.Controllers
             {
                 return NotFound();
             }
-
-            var answer = await _context.Answer.FindAsync(id);
+          
+            var answer = await _context.Answer.Include(q => q.User).FirstOrDefaultAsync(q => q.Id == id); ;
             if (answer == null)
             {
                 return NotFound();
@@ -122,7 +122,7 @@ namespace ASK_App.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Answers,QuestionId")] Answer answer)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Answers,QuestionId, UserId")] Answer answer)
         {
             
             if (id != answer.Id)

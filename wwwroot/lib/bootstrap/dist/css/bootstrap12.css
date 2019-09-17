@@ -128,8 +128,11 @@ dt {
 }
 
 dd {
-  margin-bottom: .5rem;
-  margin-left: 0;
+    margin-bottom: .5rem;
+    margin-left: 0;
+    color: whitesmoke;
+    border-bottom: 1px solid grey;
+
 }
 
 blockquote {

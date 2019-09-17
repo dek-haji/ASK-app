@@ -70,7 +70,7 @@ namespace testDemo.Controllers
         // GET: Questions/Create
         public IActionResult Create()
         {
-           // var productTypeList = new SelectList(_context.QuestionType, "QuestionTypeId", "Name");
+          
             var productTypeList = _context.QuestionType.ToList();
             var questionTypeSelectList = productTypeList.Select(type => new SelectListItem
             {
@@ -95,10 +95,6 @@ namespace testDemo.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Title,Name,UserId,QuestionTypeId")] Question question)
         {
-
-
-
-
             var user = await GetUserAsync();
             ModelState.Remove("User");
             ModelState.Remove("QuestionType");
@@ -132,7 +128,6 @@ namespace testDemo.Controllers
                 return NotFound();
             }
             var question = await _context.Question.Include(q => q.User).Include(q => q.QuestionType).Include(q => q.Answers).FirstOrDefaultAsync(q=> q.QuestionId == id);
-            //var question = await _context.Question.FindAsync(id);
             if (question == null)
             {
                 return NotFound();
@@ -208,10 +203,6 @@ namespace testDemo.Controllers
         {
             return _context.Question.Any(e => e.QuestionId == id);
         }
-        //private Task<ApplicationUser> GetUserAsync()
-        //{
-        //    return _userManager.GetUserAsync(HttpContext.User);
-        //}
-
+       
     }
 }
