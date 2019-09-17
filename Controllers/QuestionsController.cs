@@ -131,7 +131,7 @@ namespace testDemo.Controllers
             {
                 return NotFound();
             }
-            var question = await _context.Question.Include(q => q.User).Include(q => q.QuestionType).Include(q => q.Answers).FirstOrDefaultAsync();
+            var question = await _context.Question.Include(q => q.User).Include(q => q.QuestionType).Include(q => q.Answers).FirstOrDefaultAsync(q=> q.QuestionId == id);
             //var question = await _context.Question.FindAsync(id);
             if (question == null)
             {

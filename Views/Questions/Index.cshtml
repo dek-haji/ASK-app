@@ -42,51 +42,48 @@
         <tbody>
             @foreach (var item in Model.Questions)
             {
-                <tr>
+            <tr>
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Title)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DateCreated)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.User.FullName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.QuestionType.Name)
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateCreated)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.QuestionType.Name)
 
-                    </td>
-                    @*still am getting the first question when i try to edit*@
-                    @{ if (UserManager.GetUserAsync(User).Result.Id == item.UserId && @item.Answers.Count() > 0)
-                        {
-                                        <td>
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.QuestionId">Answer</a>
 
-                                            <a asp-action="Details" asp-route-id="@item.QuestionId">Details</a>|
-                                            <a asp-action="Edit" asp-route-id="@item.QuestionId">Edit</a>
+                </td>
+                @*still am getting the first question when i try to edit*@
+                @{ if (UserManager.GetUserAsync(User).Result.Id == item.UserId && @item.Answers.Count() > 0)
+                    {
+                        <td>
 
-                                        </td>
-                        }
-                        else if (UserManager.GetUserAsync(User).Result.Id == item.UserId && @item.Answers.Count() == 0)
-                        {
-                            <td>
-                                <a asp-action="Edit" asp-route-id="@item.QuestionId">Edit</a> |
-                                <a asp-action="Details" asp-route-id="@item.QuestionId">Details</a> |
-                                <a asp-action="Delete" asp-route-id="@item.QuestionId">Delete</a>
+                          
+                            <a asp-action="Edit" asp-route-id="@item.QuestionId">Edit</a>
 
-                            </td>
-                        }
-                        else
-                        {
-                            <td>
-                                <a asp-action="Details" asp-route-id="@item.QuestionId">Details</a>|
+                        </td>
+                    }
+                    else if (UserManager.GetUserAsync(User).Result.Id == item.UserId && @item.Answers.Count() == 0)
+                    {
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.QuestionId">Edit</a> |
+                            <a asp-action="Delete" asp-route-id="@item.QuestionId">Delete</a>
 
-                            </td>
-                        }
+                        </td>
+                    }
+                  
 
 
-                        }
-                </tr>
+                }
+            </tr>
             }
         </tbody>
     </table>
