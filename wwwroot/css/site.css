@@ -59,3 +59,19 @@ body {
     justify-content: flex-end;
     border-bottom-color: black;
 }
+#QuestionTypeId {
+    width: 170px
+}
+#Answer_Answers {
+    width: 1000px;
+    height: 100px;
+    text-wrap: inherit
+}
+#Answers {
+    width: 1000px;
+    height: 100px;
+}
+#Name {
+    width: 1000px;
+    height: 100px;
+}
