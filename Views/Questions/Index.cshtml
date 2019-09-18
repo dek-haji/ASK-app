@@ -74,7 +74,7 @@
                     else if (UserManager.GetUserAsync(User).Result.Id == item.UserId && @item.Answers.Count() == 0)
                     {
                         <td>
-                            <a asp-action="Edit" asp-route-id="@item.QuestionId">Edit</a> |
+                            <a asp-action="Edit" asp-route-id="@item.QuestionId"><i class="fa fa-pencil" aria-hidden="true"></i></a> |
                             <a asp-action="Delete" asp-route-id="@item.QuestionId">Delete</a>
 
                         </td>

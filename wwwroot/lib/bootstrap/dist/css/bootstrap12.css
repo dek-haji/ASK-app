@@ -124,14 +124,17 @@ ul ol {
 }
 
 dt {
-  font-weight: 700;
+  font-weight: 800;
+  color: white
 }
-
+h5 {
+    color: tomato
+}
 dd {
     margin-bottom: .5rem;
     margin-left: 0;
     color: whitesmoke;
-    border-bottom: 1px solid grey;
+    box-sizing: border-box
 
 }
 
@@ -252,10 +255,10 @@ button,
 select,
 optgroup,
 textarea {
-  margin: 0;
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
+    margin: 0;
+    font-family: Calisto MT;
+    font-size: inherit;
+    line-height: inherit;
 }
 
 button,
@@ -270,6 +273,7 @@ select {
 
 select {
   word-wrap: normal;
+
 }
 
 button,
@@ -1101,12 +1105,15 @@ pre code {
             flex: 0 0 25%;
     max-width: 25%;
   }
-  .col-md-4 {
-    -webkit-box-flex: 0;
+    .col-md-4 {
+        -webkit-box-flex: 0;
         -ms-flex: 0 0 33.3333333333%;
-            flex: 0 0 33.3333333333%;
-    max-width: 33.3333333333%;
-  }
+        flex: 0 0 33.3333333333%;
+        max-width: 33.3333333333%;
+        display: flex;
+        justify-content: end;
+        max-width: 41.6666666667%;
+    }
   .col-md-5 {
     -webkit-box-flex: 0;
         -ms-flex: 0 0 41.6666666667%;
@@ -1852,6 +1859,16 @@ pre code {
 
 .table-hover .table-danger:hover {
   background-color: #efb2cf;
+}
+/*body {
+    background-image: url('https://css-tricks.com/wp-content/uploads/2018/05/mov_glow.gif');
+    background-repeat: no-repeat;
+    margin: 0;
+}*/
+.image1 {
+    display: flex;
+    justify-content: flex-end;
+    border-bottom-color: black;
 }
 
 .table-hover .table-danger:hover > td,
@@ -4863,7 +4880,7 @@ input[type="button"].btn-block {
 }
 
 .navbar-dark .navbar-nav .nav-link:hover, .navbar-dark .navbar-nav .nav-link:focus {
-  color: rgba(255, 255, 255, 0.75);
+  color: white;
 }
 
 .navbar-dark .navbar-nav .nav-link.disabled {
@@ -10514,7 +10531,11 @@ a.text-light:hover, a.text-light:focus {
 }
 
 .text-dark {
-  color: #073642 !important;
+    color: #073642 !important;
+    font-family: Lucida Bright;
+    font-size: 20px;
+    font-size: 18px;
+    
 }
 
 a.text-dark:hover, a.text-dark:focus {
