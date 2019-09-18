@@ -1853,6 +1853,16 @@ pre code {
 .table-hover .table-danger:hover {
   background-color: #efb2cf;
 }
+/*body {
+    background-image: url('https://css-tricks.com/wp-content/uploads/2018/05/mov_glow.gif');
+    background-repeat: no-repeat;
+    margin: 0;
+}*/
+.image1 {
+    display: flex;
+    justify-content: flex-end;
+    border-bottom-color: black;
+}
 
 .table-hover .table-danger:hover > td,
 .table-hover .table-danger:hover > th {
