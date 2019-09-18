@@ -7,10 +7,10 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+
 
 <div>
-    <h4>Question</h4>
+    <h1>Question</h1>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -50,7 +50,6 @@
                        new { Model.QuestionId },         // action parameters aka route values
                        new { @class = "btn btn-primary" })
             <br />
-            @*<a asp-action="Edit" asp-route-id="@Model.QuestionId">Edit</a> |*@
             <a asp-action="Index">Back to List</a>
         }
         else
