@@ -57,7 +57,7 @@ body {
 .image1 {
     display: flex;
     justify-content: flex-end;
-    border-bottom-color: black;
+   
 }
 #QuestionTypeId {
     width: 170px
@@ -74,4 +74,10 @@ body {
 #Name {
     width: 1000px;
     height: 100px;
+}
+p{
+    color: navajowhite
+}
+a{
+    color: goldenrod
 }

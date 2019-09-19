@@ -9,52 +9,53 @@
 
 
 
-<div>
-    <h1>Question</h1>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Title)
-        </dd>
+    <div>
+        <h1>Question</h1>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Title)
+            </dt>
+            <p class="col-sm-10">
+                @Html.DisplayFor(model => model.Title)
+            </p>
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-
-    </dl>
-    <h2>Answers</h2>
-    @foreach (var item in Model.Answers)
-    {
-        <h5 class="col-sm-10">
-            @Html.DisplayFor(modelItem => item.User.FullName)
-        </h5>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(modelItem => item.Answers)
-        </dd>
-    }
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+            <p class="col-sm-10">
+                @Html.DisplayFor(model => model.Name)
+            </p>
 
 
-    @{ if (UserManager.GetUserAsync(User).Result.IsAlumni == true)
+        </dl>
+        <h2>Answers</h2>
+        @foreach (var item in Model.Answers)
         {
-            @Html.ActionLink(
-                       "Answer here",
-                       "Create",  // controller action
-                       "Answers",        // controller
-                       new { Model.QuestionId },         // action parameters aka route values
-                       new { @class = "btn btn-primary" })
-            <br />
-            <a asp-action="Index">Back to List</a>
+            <h5 class="col-sm-10">
+                @Html.DisplayFor(modelItem => item.User.FullName)
+            </h5>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(modelItem => item.Answers)
+            </dd>
         }
-        else
-        {
-            <a asp-action="Index">Back to List</a>
+
+
+        @{ if (UserManager.GetUserAsync(User).Result.IsAlumni == true)
+            {
+                @Html.ActionLink(
+                           "Answer here",
+                           "Create",  // controller action
+                           "Answers",        // controller
+                           new { Model.QuestionId },         // action parameters aka route values
+                           new { @class = "btn btn-primary" })
+                <br />
+                <a asp-action="Index"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+            }
+            else
+            {
+                <a asp-action="Index"><i class="fa fa-arrow-left fa-2x" aria-hidden="true"></i></a>
+            }
+        
         }
-    }
-</div>
+    </div>
