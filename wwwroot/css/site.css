@@ -59,6 +59,10 @@ body {
     justify-content: flex-end;
    
 }
+.image22 {
+    display: flex;
+    justify-content: flex-end;
+}
 #QuestionTypeId {
     width: 170px
 }
@@ -79,5 +83,10 @@ p{
     color: navajowhite
 }
 a{
-    color: goldenrod
+    color: goldenrod;
+    padding: 5px
+}
+.col-md-6 {
+    max-width: 400px; /* Adjust as needed */
+    margin: 0 auto; /* Center the form on the screen */
 }

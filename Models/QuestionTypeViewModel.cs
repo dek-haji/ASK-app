@@ -14,5 +14,6 @@ namespace ASK_App.Models
         public Question question { get; set; }
 
         public QuestionType QuestionType { get; set; }
+       
     }
 }

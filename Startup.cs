@@ -67,11 +67,26 @@ namespace ASK_App
 
             app.UseAuthentication();
 
-            app.UseMvc(routes =>
+            app.MapWhen(context => !context.User.Identity.IsAuthenticated, branch =>
             {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                // If not authenticated, redirect to Index1 action
+                branch.UseMvc(routes =>
+                {
+                    routes.MapRoute(
+                        name: "index1",
+                        template: "{controller=Home}/{action=Index1}/{id?}");
+                });
+            });
+
+            app.MapWhen(context => context.User.Identity.IsAuthenticated, branch =>
+            {
+                // If authenticated, use the default route
+                branch.UseMvc(routes =>
+                {
+                    routes.MapRoute(
+                        name: "default",
+                        template: "{controller=Home}/{action=Index}/{id?}");
+                });
             });
         }
     }

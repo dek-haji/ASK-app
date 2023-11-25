@@ -20,6 +20,7 @@ namespace ASK_App.Models
 
         [NotMapped]
         public string FullName { get { return $"{FirstName} {LastName}"; } }
+        [Required]
         public bool IsAlumni { get; set; }
 
         public virtual ICollection<Question> Question { get; set; }
