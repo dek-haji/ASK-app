@@ -6,7 +6,6 @@
 @{
     ViewData["Title"] = "Index";
 }
-
 <h1>Index</h1>
 
 <p>
@@ -23,7 +22,6 @@
     <table class="table">
         <thead>
             <tr>
-
                 <th>
                     @Html.DisplayNameFor(model => model.question.Title)
                 </th>
@@ -62,27 +60,23 @@
 
                 </td>
                 @*still am getting the first question when i try to edit*@
-                @{ if (UserManager.GetUserAsync(User).Result.Id == item.UserId && @item.Answers.Count() > 0)
-                    {
-                        <td>
+                    @{
+                        if (UserManager.GetUserAsync(User).Result.Id == item.UserId && @item.Answers.Count() > 0)
+                        {
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.QuestionId"> <i class="fa fa-pencil fa-2x" aria-hidden="true"></i></a>
+                            </td>
+                        }
+                        else if (UserManager.GetUserAsync(User).Result.Id == item.UserId && @item.Answers.Count() == 0)
+                        {
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.QuestionId"><i class="fa fa-pencil fa-2x" aria-hidden="true"></i></a> 
 
-                          
-                            <a asp-action="Edit" asp-route-id="@item.QuestionId">Edit</a>
+                                <a asp-action="Delete" asp-route-id="@item.QuestionId"><i class="fa fa-trash-o fa-2x" aria-hidden="true"></i></a>
 
-                        </td>
+                            </td>
+                        }
                     }
-                    else if (UserManager.GetUserAsync(User).Result.Id == item.UserId && @item.Answers.Count() == 0)
-                    {
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@item.QuestionId">Edit</a> |
-                            <a asp-action="Delete" asp-route-id="@item.QuestionId">Delete</a>
-
-                        </td>
-                    }
-                  
-
-
-                }
             </tr>
             }
         </tbody>

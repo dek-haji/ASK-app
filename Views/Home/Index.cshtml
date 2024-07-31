@@ -1,16 +1,32 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
+@if (UserManager.GetUserAsync(User).Result != null)
+{
     <div class="text-center">
-        <h1 class="display-4">Welcome Student How Can we Help you today?</h1>
-         <div id="logo">
-            <a href="@Url.Action("Create", "Questions")">
-                <img src="~/Images/save.png" alt="image" />
-            </a>
-        </div>
-       
-       
+        @if (UserManager.GetUserAsync(User).Result.IsAlumni == true)
+        {
+            <h1 class="display-4">Welcome Alumni! Are you here to help today?</h1>
+            <div id="logo">
+                <a href="@Url.Action("Index", "Questions")">
+                    <img src="~/Images/save.png" alt="image" />
+                </a>
+            </div>
+        }
+        else
+        {
+            <h1 class="display-4">Welcome Student! How can we help you today?</h1>
+            <div id="logo">
+                <a href="@Url.Action("Create", "Questions")">
+                    <img src="~/Images/save.png" alt="image" />
+                </a>
+            </div>
+        }
     </div>
-    <div>
-       
+}

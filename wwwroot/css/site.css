@@ -57,7 +57,11 @@ body {
 .image1 {
     display: flex;
     justify-content: flex-end;
-    border-bottom-color: black;
+   
+}
+.image22 {
+    display: flex;
+    justify-content: flex-end;
 }
 #QuestionTypeId {
     width: 170px
@@ -74,4 +78,19 @@ body {
 #Name {
     width: 1000px;
     height: 100px;
+}
+p{
+    color:red;
+}
+a{
+    color: cadetblue;
+    padding: 4px
+}
+.col-md-6 {
+    max-width: 400px; /* Adjust as needed */
+    margin: 0 auto; /* Center the form on the screen */
+}
+h5 {
+        color: red;
+
 }

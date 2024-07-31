@@ -24,3 +24,15 @@ else
     </li>
 }
 </ul>
+
+@{
+    if (!SignInManager.IsSignedIn(User))
+    {
+        <script>
+            document.querySelector('form').addEventListener('submit', function(event) {
+                event.preventDefault();
+                window.location.href = '@Url.Page("/Account/Login")';
+            });
+        </script>
+    }
+}

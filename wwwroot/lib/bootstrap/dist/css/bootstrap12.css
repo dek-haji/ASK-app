@@ -1958,7 +1958,9 @@ pre code {
 .table-dark thead th {
   border-color: #a5adb6;
 }
-
+td{
+    color: navajowhite
+}
 .table-dark.table-bordered {
   border: 0;
 }
