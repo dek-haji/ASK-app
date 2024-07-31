@@ -80,13 +80,17 @@ body {
     height: 100px;
 }
 p{
-    color: navajowhite
+    color:red;
 }
 a{
-    color: goldenrod;
-    padding: 5px
+    color: cadetblue;
+    padding: 4px
 }
 .col-md-6 {
     max-width: 400px; /* Adjust as needed */
     margin: 0 auto; /* Center the form on the screen */
+}
+h5 {
+        color: red;
+
 }

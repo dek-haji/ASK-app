@@ -14,18 +14,10 @@ namespace ASK_App.Controllers
 
     public class HomeController : Controller
     {
-        private readonly ApplicationDbContext _context;
-
-        public HomeController(ApplicationDbContext context)
+  
+        public  IActionResult Index()
         {
-            _context = context;
-        }
-
-        // GET: Questions
-        public async Task<IActionResult> Index()
-        {
-            var applicationDbContext = _context.Question.Include(p => p.QuestionType).OrderByDescending(p => p.DateCreated).Include(p => p.User).Take(20);
-            return View(await applicationDbContext.ToListAsync());
+            return View();
         }
 
         public IActionResult Privacy()

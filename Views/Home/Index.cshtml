@@ -1,5 +1,4 @@
-﻿@Model ASK_App.Models.Question
-@using Microsoft.AspNetCore.Identity
+﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
@@ -9,7 +8,6 @@
 }
 
 @if (UserManager.GetUserAsync(User).Result != null)
-
 {
     <div class="text-center">
         @if (UserManager.GetUserAsync(User).Result.IsAlumni == true)

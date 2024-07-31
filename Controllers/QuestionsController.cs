@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
-namespace testDemo.Controllers
+namespace ASK_App.Controllers
 {
     public class QuestionsController : Controller
     {
