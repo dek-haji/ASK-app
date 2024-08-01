@@ -27,8 +27,7 @@ namespace ASK_App.Controllers
         // GET: Questions
         public async Task<IActionResult> Index(int? questionTypeId)
         {
-            var questions = _context.Question.Include(q => q.QuestionType).Include(q=> q.User).Include(w=> w.Answers).AsQueryable();
-                                        
+            var questions = _context.Question.Include(q => q.QuestionType).Include(q=> q.User).Include(w=> w.Answers).AsQueryable();                                
            
             if (questionTypeId != null)
             {

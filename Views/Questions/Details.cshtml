@@ -43,7 +43,7 @@
         @{ if (UserManager.GetUserAsync(User).Result.IsAlumni == true)
             {
                 @Html.ActionLink(
-                           "Answer here",
+                           "Comment",
                            "Create",  // controller action
                            "Answers",        // controller
                            new { Model.QuestionId },         // action parameters aka route values
@@ -54,7 +54,6 @@
             else
             {
                 <a asp-action="Index"><i class="fa fa-arrow-left fa-2x" aria-hidden="true"></i></a>
-            }
-        
+            }  
         }
     </div>
